@@ -2,7 +2,7 @@
 
 English · [简体中文](./README.zh-CN.md)
 
-Browse plugins for Achbit. Each plugin page explains what it does and links to the author's source, license and versioned download.
+Choose a category below to browse plugins. Categories with more than 25 listings continue on the next page. Each plugin page explains its purpose and links to the author’s source, license and versioned download.
 
 | Browse by category | What you can add |
 | --- | --- |
@@ -13,4 +13,4 @@ Browse plugins for Achbit. Each plugin page explains what it does and links to t
 
 Open **Settings → Plugins → Marketplace** in Achbit. When a listing shows **Install & enable**, select it to install the author's package on the connected Host. To import a ZIP yourself, including on Achbit 0.7.85, follow the **Version** link on the plugin page, then choose **Installed → Add…** in plugin settings. A verification record describes the publisher check or the particular installation that was tested.
 
-Contributors maintain one Markdown page per plugin. Read the [submission guide](./CONTRIBUTING.md) or start from the [plugin template](./templates/plugin.md). Achbit reads the [generated directory](./plugins.json).
+To contribute, add or update `plugins/<kind>/<id>.md` and open a pull request. A maintainer reviews the source and package, then merges approved listings into the [directory](./plugins.json). [Submission guide](./CONTRIBUTING.md) · [Plugin template](./templates/plugin.md)

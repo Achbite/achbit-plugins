@@ -1,10 +1,12 @@
 import json
+import re
 import shutil
 import subprocess
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from urllib.parse import unquote
 
 from scripts.catalog import generate
 
@@ -16,7 +18,7 @@ class CatalogTest(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
-        self.root = Path(self.tmp.name)
+        self.root = Path(self.tmp.name).resolve()
 
     def add(self, kind, plugin_id, markdown=TEMPLATE):
         path = self.root / 'plugins' / kind / (plugin_id + '.md')
@@ -69,6 +71,72 @@ class CatalogTest(unittest.TestCase):
                 path.write_text(bad)
                 with self.assertRaises(ValueError):
                     generate(self.root)
+
+    def test_category_pagination_preserves_all_entries_and_relative_navigation_in_both_languages(self):
+        def add_items(start, end):
+            for i in range(start, end):
+                self.add('ui', f'item {i:02}', TEMPLATE.replace('# Plugin name', f'# Item {i:02}'))
+
+        def targets(page):
+            links = re.findall(r'\[[^]]+\]\(([^)]+)\)', outputs[page])
+            return [(page.parent / unquote(link)).resolve() for link in links]
+
+        add_items(0, 25)
+        outputs = generate(self.root)
+        self.assertFalse(any(path.parent.parent == self.root / 'categories' for path in outputs))
+        add_items(25, 51)
+        outputs = generate(self.root)
+        categories = self.root / 'categories'
+        expected = sorted((self.root / 'plugins/ui').glob('*.md'))
+        for suffix, other in [('', '.zh-CN'), ('.zh-CN', '')]:
+            pages = [categories / f'ui{suffix}.md', categories / f'ui/page-2{suffix}.md',
+                     categories / f'ui/page-3{suffix}.md']
+            for index, page in enumerate(pages):
+                with self.subTest(page=page.name):
+                    linked = targets(page)
+                    plugins = [path for path in linked if path.parent == self.root / 'plugins/ui']
+                    self.assertEqual(plugins, expected[index * 25:(index + 1) * 25])
+                    paired = page.with_name(('ui' if index == 0 else f'page-{index + 1}') + other + '.md')
+                    navigation = [paired, self.root / f'README{suffix}.md']
+                    if index:
+                        navigation.append(pages[index - 1])
+                    if index < len(pages) - 1:
+                        navigation.append(pages[index + 1])
+                    self.assertCountEqual([path for path in linked if path not in plugins], navigation)
+        self.assertEqual(len(json.loads(outputs[self.root / 'plugins.json'])['plugins']), 51)
+
+    def test_shrinking_catalog_reports_and_removes_only_its_generated_continuations(self):
+        for i in range(26):
+            extra = self.add('service', f'service-{i:02}')
+        (self.root / 'scripts').mkdir()
+        tool = self.root / 'scripts/catalog.py'
+        shutil.copy(ROOT / 'scripts/catalog.py', tool)
+        command = [sys.executable, str(tool)]
+        subprocess.run(command, check=True)
+        category = self.root / 'categories/service'
+        generated = [category / 'page-2.md', category / 'page-2.zh-CN.md']
+        manual = [category / 'notes.md', category / 'page-9.md']
+        for path in manual:
+            path.write_text('# Maintainer notes\n', encoding='utf-8')
+        extra.unlink()
+        result = subprocess.run(command + ['--check'], capture_output=True, text=True)
+        self.assertNotEqual(result.returncode, 0)
+        for path in generated:
+            self.assertIn(str(path.relative_to(self.root)), result.stderr)
+            self.assertTrue(path.is_file())
+        subprocess.run(command, check=True)
+        subprocess.run(command + ['--check'], check=True)
+        self.assertFalse(any(path.exists() for path in generated))
+        for path in manual:
+            self.assertEqual(path.read_text(encoding='utf-8'), '# Maintainer notes\n')
+        # A manually authored page at a newly needed path must also survive generation.
+        generated[0].write_text('# Maintainer notes\n', encoding='utf-8')
+        self.add('service', 'new-plugin')
+        result = subprocess.run(command, capture_output=True, text=True)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(str(generated[0].relative_to(self.root)), result.stderr)
+        self.assertEqual(generated[0].read_text(encoding='utf-8'), '# Maintainer notes\n')
+
 
     def test_check_reports_stale_generated_files_without_writing(self):
         self.add('ui', 'example')

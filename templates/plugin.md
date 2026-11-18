@@ -1,18 +1,19 @@
 # Plugin name
 
-[English](#english) · [简体中文](#简体中文) · [Release / 版本](#release--版本)
+<!-- Save as plugins/<kind>/<id>.md. 分类 kind = guidance | cli | service | ui. -->
 
 ## English
 
-Write one plain-text paragraph describing what the plugin does. Category pages use this paragraph.
-
-Describe how to install, configure if needed, and try the plugin for the first time.
+Describe what the plugin does and give a short example of its use.
 
 ## 简体中文
 
-用一小段文字描述用途。这一段用于中文分类页和应用内的中文摘要。
+用一小段文字说明插件用途，并给一个用法示例。
 
-说明如何安装、按需配置以及第一次使用。
+<!-- For direct installation, add these rows for the author ZIP. 提供直接安装时，将这两行加入下表。
+| ZIP SHA-256 | <64 lowercase hex digits> |
+| Manifest ID | <exact ID from achbit-cli plugins inspect> |
+-->
 
 ## Release / 版本
 
@@ -23,4 +24,3 @@ Describe how to install, configure if needed, and try the plugin for the first t
 | Source | [Source / 源码](https://github.com/example/plugin/tree/0123456789abcdef0123456789abcdef01234567) |
 | License | [MIT](https://github.com/example/plugin/blob/0123456789abcdef0123456789abcdef01234567/LICENSE) |
 | License kind | open-source |
-| Repository | [Project / 项目](https://github.com/example/plugin) |
