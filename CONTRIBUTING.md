@@ -2,29 +2,32 @@
 
 English · [简体中文](./CONTRIBUTING.zh-CN.md) · [Directory](./README.md)
 
-Check the [open pull requests](https://github.com/Achbite/achbit-plugins/pulls) for an existing submission. For a new listing, copy [the template](./templates/plugin.md) to `plugins/<kind>/<id>.md`. Choose `guidance`, `cli`, `service` or `ui` for the kind and a stable, lowercase directory ID such as `text-echo`. Keep that ID when updating a release. The directory ID identifies the listing. The package can have its own, different manifest ID.
+External contributors open a pull request that adds or updates one plugin’s Markdown page. A maintainer reviews the source and the author’s package, runs `python3 scripts/catalog.py` on the PR branch, commits the generated category pages under `categories/` and the index `plugins.json`, and merges the approved listing.
 
-## Write the page
+## Write your plugin page
 
-Use the plugin's display name as the title. Under **English** and **简体中文**, describe what a reader can actually do with the plugin. The first paragraph in each language appears in its category table. The index uses the English summary for `description` and the Chinese one for `descriptionZhCN`. Use plain text for those paragraphs. The rest of each section can include Markdown links, configuration steps, screenshots or an example of a first run.
+Copy the [template](./templates/plugin.md) to `plugins/<kind>/<id>.md`. Choose `guidance`, `cli`, `service` or `ui`. Use a stable directory ID such as `text-echo`. The package has its own manifest ID. For updates, edit the existing page.
 
-The **Release / 版本** table supplies the common release facts for both languages. Keep its field names as shown in the template.
+Use the plugin’s display name as the title. Under **English** and **简体中文**, start with a plain-text paragraph explaining what the plugin does. Those paragraphs appear in the directory. Follow with instructions or an example that helps a reader try the plugin.
 
-| Field | What to enter |
+Keep the template’s **Release / 版本** field names and fill in these details.
+
+| Field | What to provide |
 | --- | --- |
-| Author | The publisher's public name. |
-| Version | A Markdown link with the plugin version as the label. Link to the author's anonymously accessible package for that exact version, such as a tagged release asset. |
-| Source | A link to the reviewed source directory, file or commit. Include the full Git commit ID in the path or a query parameter. |
-| License | A link with the license name as its label, pointing to the terms applicable to this version. |
-| License kind | Use `open-source` for an open-source license. Use `source-available` for publicly readable code published under other terms. |
-| Repository | Optional link to the author's project. |
-| ZIP SHA-256 and Manifest ID | Optional pair for direct installation in clients that support it. Record the 64 lowercase hex characters of the exact downloadable ZIP and the case-sensitive ID returned by `achbit-cli plugins inspect`, including any spaces. |
-| Verification | Optional `publisher` or `installation` for a documented publisher identity or installation check. Installation requires separate **Verified platform** and **Verified version** rows with the tested platform and the listed plugin version. An **Evidence** row can link to the record. |
+| Author and Version | The publisher’s name and a public HTTPS link to the author’s package for this exact plugin version. Use the version as the link text. |
+| Source | The reviewed source at its full Git commit ID. Put the ID in the URL path or a query parameter. |
+| License and License kind | Link the license name to the terms for this version. Use `open-source` or `source-available` as applicable. |
+| Repository | Optional link to the author’s project. |
+| ZIP SHA-256 and Manifest ID | For direct installation, give the same ZIP’s SHA-256 in 64 lowercase hexadecimal characters and its exact ID from `achbit-cli plugins inspect`. Download-only entries can omit both. |
+| Verification | Optional. Use `publisher` for a documented publisher check. Use `installation` for an observed install, with **Verified platform** and **Verified version** matching the listed release. **Evidence** can link to the record. |
 
-Use public HTTPS links. A package published on the author's release page can carry its own plugin version. A standalone ZIP includes its manifest or `SKILL.md` at the root plus the necessary entry points, resources and license files. When supplying direct-install fields, download the archive, hash those bytes and inspect that same archive. A digest identifies the bytes. An installation verification describes a separate observation with a stated version and platform. Download-only entries can omit the pair.
+## Where links and files go
 
-## Open a pull request
+- Relative Markdown links start at the page containing the link. For example, in [the Text Echo page](./plugins/guidance/text-echo.md), `../../verification/0.7.84-macos-arm64.md` reaches [the directory’s installation record](./verification/0.7.84-macos-arm64.md). In a release table, the optional **Evidence** link uses the record’s public HTTPS URL at its reviewed commit.
+- Keep source, license text, screenshots and demos in the author’s repository. Link to the reviewed commit or fixed release over HTTPS. Publish the ZIP as an asset of the author’s versioned release and put that URL in **Version**. The central directory accepts listing pages and references. [Example author ZIP](https://github.com/Achbite/Achbit/releases/download/0.7.85/text-echo-0.7.84.zip)
 
-1. Update the plugin page, including its English and Chinese sections, in one pull request. For a new release, check the source, license, download and any optional installation or verification facts against the new version.
-2. From the repository root, run `python3 scripts/catalog.py`. This generates the alphabetical category pages and the schema-version-1 `plugins.json`. Include the generated changes in the PR. Run `python3 scripts/catalog.py --check` to confirm they match the pages. The generator uses the Python standard library.
-3. Describe how a maintainer can obtain the package, compare it to the source and reproduce any verification you claim. Include the plugin page and its generated changes. The [pull request template](./.github/PULL_REQUEST_TEMPLATE.md) lists the review points.
+## Maintainer review
+
+The generator assigns up to 25 listings to each category page. For example, the UI category starts at `categories/ui.md` and continues at `categories/ui/page-2.md` when needed. Chinese pages use the `.zh-CN.md` suffix. Contributors only choose the plugin kind.
+
+Compare the linked release package with the stated source and license. For direct-install entries, hash the downloaded ZIP and inspect that file’s manifest ID. Check any verification claim against its stated scope. After updating the generated files on the PR branch, you can optionally run `python3 scripts/catalog.py --check` to check for stale output.

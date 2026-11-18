@@ -2,29 +2,32 @@
 
 [English](./CONTRIBUTING.md) · 简体中文 · [插件目录](./README.zh-CN.md)
 
-先查看[正在审核的 PR](https://github.com/Achbite/achbit-plugins/pulls)，确认是否已有人投稿。要新增条目，将[模板](./templates/plugin.md)复制到 `plugins/<kind>/<id>.md`。分类可选 `guidance`、`cli`、`service`、`ui`。目录 ID 使用稳定的小写名称，例如 `text-echo`，更新版本时沿用。目录 ID 用来识别条目，安装包清单可以使用自己的 ID。
+外部贡献者只需新增或更新一份插件 Markdown 说明页，并发起 PR。维护者审核源码和作者发布的安装包，在 PR 分支运行 `python3 scripts/catalog.py`，提交生成的 `categories/` 分类页和 `plugins.json` 索引，审核通过后合并收录。
 
-## 编写说明页
+## 编写插件页
 
-标题填写插件的显示名称。在 **English** 和 **简体中文** 两节中介绍插件能做什么。每种语言的第一段会显示在对应的分类表里，英文首段写入应用索引的 `description`，中文首段写入 `descriptionZhCN`。首段使用纯文本。后续内容可使用 Markdown 链接、配置步骤、截图或首次使用示例。
+将[模板](./templates/plugin.md)复制到 `plugins/<kind>/<id>.md`。分类可选 `guidance`、`cli`、`service` 或 `ui`。目录 ID 使用稳定名称，例如 `text-echo`。安装包有自己的清单 ID。发布新版本时更新原页面即可。
 
-**Release / 版本** 表格供中英文共用。请沿用模板里的字段名。
+用插件显示名称作标题。在 **English** 和 **简体中文** 两节中，各用一段纯文本介绍插件用途，供目录展示。后面可以写配置、用法或首次使用示例。
 
-| 字段 | 内容 |
+沿用模板中 **Release / 版本** 表的字段名称，填写以下资料。
+
+| 字段 | 填写内容 |
 | --- | --- |
-| Author | 发布者的公开署名。 |
-| Version | Markdown 链接，文字为插件版本。链接应能匿名下载作者发布的该版本安装包，例如带版本标签的 Release 附件。 |
-| Source | 指向已核对的源码目录、文件或提交，在路径或查询参数中包含完整 Git 提交 ID。 |
-| License | 链接文字为许可证名称，指向该版本适用的许可证原文。 |
-| License kind | 使用开源许可证时选择 `open-source`。源码允许公开阅读但适用其他许可条款时，选择 `source-available`。 |
-| Repository | 可选，作者项目主页链接。 |
-| ZIP SHA-256 和 Manifest ID | 支持直接安装的客户端可使用这对选填字段。填写可下载 ZIP 原始字节的 SHA-256（64 位小写十六进制），以及 `achbit-cli plugins inspect` 实际返回的 ID，保留大小写和空格。 |
-| Verification | 可选。有发布者身份核验依据时填 `publisher`，有实际安装核验记录时填 `installation`。安装核验须另填 **Verified platform** 和 **Verified version** 两行，注明实际平台和与条目相同的插件版本。可在 **Evidence** 行链接核验记录。 |
+| Author 和 Version | 作者署名，以及作者发布的该版本安装包的公开 HTTPS 链接。链接文字为插件版本号。 |
+| Source | 已核对的源码链接，路径或查询参数中包含完整 Git 提交 ID。 |
+| License 和 License kind | 用许可证名称链接该版本适用的条款，按实际情况填写 `open-source` 或 `source-available`。 |
+| Repository | 可选，作者的项目主页。 |
+| ZIP SHA-256 和 Manifest ID | 提供直接安装时，填入同一份 ZIP 的 SHA-256（64 位小写十六进制）和 `achbit-cli plugins inspect` 读出的完整清单 ID。仅提供下载的条目可省略这两项。 |
+| Verification | 可选。已核实发布者身份时填 `publisher`。实际验证过安装时填 `installation`，并以 **Verified platform**、**Verified version** 写明实测平台与对应的条目版本。**Evidence** 可链接核验记录。 |
 
-外部地址使用公开的 HTTPS 链接。作者发布页所附的插件包可以有独立版本。独立 ZIP 根目录需包含受支持的清单文件或 `SKILL.md`，包内附上必需的入口、资源和许可证文件。提供直接安装资料时，请实际下载安装包，计算摘要，用同一份 ZIP 检查清单 ID。摘要用于辨认文件内容。安装核验则记录某平台、某版本的一次实际操作。仅提供下载的条目可以省略安装资料。
+## 文件与链接放在哪里
 
-## 提交 Pull Request
+- Markdown 相对链接从写下这条链接的页面算起。例如，在 [Text Echo 说明页](./plugins/guidance/text-echo.md) 中，`../../verification/0.7.84-macos-arm64.md` 指向[本目录的安装记录](./verification/0.7.84-macos-arm64.md)。若在版本表的 **Evidence** 字段引用该记录，请填写指向已审核提交的公开 HTTPS 链接。
+- 源码、许可证原文、截图和演示保存在作者仓库，说明页使用指向固定提交或版本的公开 HTTPS 链接。ZIP 由作者作为带版本的 Release 附件发布，**Version** 字段填附件链接。中央目录只收录插件说明及引用。[作者 ZIP 实例](https://github.com/Achbite/Achbit/releases/download/0.7.85/text-echo-0.7.84.zip)
 
-1. 在同一个 PR 中更新插件页面的英文、中文说明。更换版本时，请重新核对源码、许可证、下载链接以及可选的安装资料和核验记录。
-2. 在仓库根目录运行 `python3 scripts/catalog.py`，生成按名称排序的分类页和 schema 版本为 1 的 `plugins.json`。将生成结果随说明页一起提交。运行 `python3 scripts/catalog.py --check` 可核对生成结果。脚本仅使用 Python 标准库。
-3. 在 PR 说明中写清如何下载安装包、如何与源码比对，以及如何复现条目声称的核验结果。PR 中包含该插件页面和相应生成改动。审核事项见 [PR 模板](./.github/PULL_REQUEST_TEMPLATE.md)。
+## 维护者审核
+
+每个分类页最多展示 25 个插件，生成器按数量自动分页。例如，界面插件的分类首页为 `categories/ui.md`，需要续页时从 `categories/ui/page-2.md` 开始，中文页使用 `.zh-CN.md` 后缀。投稿人只需选择插件分类。
+
+对照链接中的源码和许可核对作者的发布包。提供直接安装时，计算下载 ZIP 的摘要，并读取同一文件的清单 ID。若条目带有核验声明，请核对其记录所覆盖的平台、版本或发布者身份。将生成结果提交到 PR 分支后，可按需运行 `python3 scripts/catalog.py --check` 检查是否有过期输出。
