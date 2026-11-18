@@ -5,7 +5,8 @@
       "id": "text-echo",
       "name": "Text Echo",
       "kind": "guidance",
-      "description": "按原样返回用户提供的文本，可用来体验声明式 Skill。",
+      "description": "Returns the text you provide unchanged. Use it to try a declarative Skill in a conversation.",
+      "descriptionZhCN": "按原样返回用户提供的文本，可用来体验声明式 Skill。",
       "author": "Achbit Team",
       "version": "0.7.84",
       "sourceCommit": "2c9d601555dbacf52e5a25363c8bbb2fccd5f0b5",
@@ -20,13 +21,18 @@
         "platform": "macos-arm64",
         "version": "0.7.84",
         "evidenceUrl": "https://github.com/Achbite/achbit-plugins/blob/2f779fd26abd8cfcfc500fc8c9de928ec37ec8b1/verification/0.7.84-macos-arm64.md"
+      },
+      "install": {
+        "sha256": "9fb669c9ea2c7d1605fc4f13d340f50b186cb1a2494d0bb8974f7c588a9e00f4",
+        "manifestId": "Text Echo Declarative Skill"
       }
     },
     {
       "id": "example-theme",
       "name": "Example Theme",
       "kind": "ui",
-      "description": "使用主题扩展槽位更换界面强调色。",
+      "description": "Changes the GUI accent color through the theme extension slot.",
+      "descriptionZhCN": "使用主题扩展槽位更换界面强调色。",
       "author": "Achbit Team",
       "version": "0.7.84",
       "sourceCommit": "2c9d601555dbacf52e5a25363c8bbb2fccd5f0b5",
@@ -41,6 +47,10 @@
         "platform": "macos-arm64",
         "version": "0.7.84",
         "evidenceUrl": "https://github.com/Achbite/achbit-plugins/blob/2f779fd26abd8cfcfc500fc8c9de928ec37ec8b1/verification/0.7.84-macos-arm64.md"
+      },
+      "install": {
+        "sha256": "d34c973ca87f88922ca3f41b616da548e6e50749cc4015124c2d58a301bc0be7",
+        "manifestId": "example-theme"
       }
     }
   ]
