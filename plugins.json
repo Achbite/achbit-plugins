@@ -1,4 +1,47 @@
 {
   "schemaVersion": 1,
-  "plugins": []
+  "plugins": [
+    {
+      "id": "text-echo",
+      "name": "Text Echo",
+      "kind": "guidance",
+      "description": "按原样返回用户提供的文本，可用来体验声明式 Skill。",
+      "author": "Achbit Team",
+      "version": "0.7.84",
+      "sourceCommit": "2c9d601555dbacf52e5a25363c8bbb2fccd5f0b5",
+      "sourceUrl": "https://github.com/Achbite/Achbit/tree/2c9d601555dbacf52e5a25363c8bbb2fccd5f0b5/fixtures/skill-mcp-smoke/skills/text-echo-declarative",
+      "repositoryUrl": "https://github.com/Achbite/Achbit",
+      "licenseKind": "open-source",
+      "licenseName": "MIT",
+      "licenseUrl": "https://github.com/Achbite/Achbit/blob/2c9d601555dbacf52e5a25363c8bbb2fccd5f0b5/LICENSE",
+      "downloadUrl": "https://raw.githubusercontent.com/Achbite/Achbit/691727d356d8313c6fd829618222d417f06f881d/examples/plugins/downloads/text-echo-0.7.84.zip",
+      "verification": {
+        "kind": "installation",
+        "platform": "macos-arm64",
+        "version": "0.7.84",
+        "evidenceUrl": "https://github.com/Achbite/achbit-plugins/blob/2f779fd26abd8cfcfc500fc8c9de928ec37ec8b1/verification/0.7.84-macos-arm64.md"
+      }
+    },
+    {
+      "id": "example-theme",
+      "name": "Example Theme",
+      "kind": "ui",
+      "description": "使用主题扩展槽位更换界面强调色。",
+      "author": "Achbit Team",
+      "version": "0.7.84",
+      "sourceCommit": "2c9d601555dbacf52e5a25363c8bbb2fccd5f0b5",
+      "sourceUrl": "https://github.com/Achbite/Achbit/tree/2c9d601555dbacf52e5a25363c8bbb2fccd5f0b5/examples/plugins/ui-theme",
+      "repositoryUrl": "https://github.com/Achbite/Achbit",
+      "licenseKind": "open-source",
+      "licenseName": "MIT",
+      "licenseUrl": "https://github.com/Achbite/Achbit/blob/2c9d601555dbacf52e5a25363c8bbb2fccd5f0b5/LICENSE",
+      "downloadUrl": "https://raw.githubusercontent.com/Achbite/Achbit/691727d356d8313c6fd829618222d417f06f881d/examples/plugins/downloads/ui-theme-0.7.84.zip",
+      "verification": {
+        "kind": "installation",
+        "platform": "macos-arm64",
+        "version": "0.7.84",
+        "evidenceUrl": "https://github.com/Achbite/achbit-plugins/blob/2f779fd26abd8cfcfc500fc8c9de928ec37ec8b1/verification/0.7.84-macos-arm64.md"
+      }
+    }
+  ]
 }
