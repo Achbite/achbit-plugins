@@ -14,7 +14,7 @@
       "licenseKind": "open-source",
       "licenseName": "MIT",
       "licenseUrl": "https://github.com/Achbite/Achbit/blob/2c9d601555dbacf52e5a25363c8bbb2fccd5f0b5/LICENSE",
-      "downloadUrl": "https://raw.githubusercontent.com/Achbite/Achbit/691727d356d8313c6fd829618222d417f06f881d/examples/plugins/downloads/text-echo-0.7.84.zip",
+      "downloadUrl": "https://github.com/Achbite/Achbit/releases/download/0.7.85/text-echo-0.7.84.zip",
       "verification": {
         "kind": "installation",
         "platform": "macos-arm64",
@@ -35,7 +35,7 @@
       "licenseKind": "open-source",
       "licenseName": "MIT",
       "licenseUrl": "https://github.com/Achbite/Achbit/blob/2c9d601555dbacf52e5a25363c8bbb2fccd5f0b5/LICENSE",
-      "downloadUrl": "https://raw.githubusercontent.com/Achbite/Achbit/691727d356d8313c6fd829618222d417f06f881d/examples/plugins/downloads/ui-theme-0.7.84.zip",
+      "downloadUrl": "https://github.com/Achbite/Achbit/releases/download/0.7.85/ui-theme-0.7.84.zip",
       "verification": {
         "kind": "installation",
         "platform": "macos-arm64",
