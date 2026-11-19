@@ -1,6 +1,7 @@
 # Plugin name
 
-<!-- Save as plugins/<kind>/<id>.md. 分类 kind = guidance | cli | service | ui. -->
+<!-- Save as plugins/<kind>/<id>.md. 分类 kind = guidance | cli | service | ui.
+Replace the example MIT link with this release’s actual license. 将示例 MIT 链接替换为插件本版本实际适用的许可。 -->
 
 ## English
 
